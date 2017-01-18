@@ -8,7 +8,7 @@ var pubnub = new PubNub({
 })
 pubnub.publish(
     {
-        message: { "place": "bedroom", "device":"light", "state":true },
+        message: { "place": "bedroom", "device":"light", "state":false },
         channel: 'switch',
         sendByPost: false, // true to send via post
         storeInHistory: true //override default storage options

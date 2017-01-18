@@ -12,11 +12,11 @@ console.log("Listening...");
 pubnub.addListener({
     message: function(m) {
         // handle message
-        var channelName = m.channel; // The channel for which the message belongs
-        var channelGroup = m.subscription; // The channel group or wildcard subscription match (if exists)
+        var channelName = m.channel; // The channel for which the message belon$
+        var channelGroup = m.subscription; // The channel group or wildcard sub$
         var pubTT = m.timetoken; // Publish timetoken
         var msg = m.message; // The Payload
-        console.log(msg);
+        console.log(msg["device"]);
     }
 })
 
