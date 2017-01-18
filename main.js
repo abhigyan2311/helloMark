@@ -1,4 +1,5 @@
 var PubNub = require('pubnub')
+var PythonShell = require('python-shell');
 
 var pubnub = new PubNub({
     subscribeKey: "sub-c-383332aa-dcc0-11e6-b6b1-02ee2ddab7fe",
@@ -16,7 +17,19 @@ pubnub.addListener({
         var channelGroup = m.subscription; // The channel group or wildcard sub$
         var pubTT = m.timetoken; // Publish timetoken
         var msg = m.message; // The Payload
-        console.log(msg["device"]);
+        console.log(msg);
+        if(msg["device"]=="light" && msg["place"]=="bedroom"){
+          switch(msg["state"]){
+           case true : PythonShell.run('on.py', function (err) {
+  if (err) throw err;
+  console.log('Lights On!');
+}); 
+           case false : PythonShell.run('off.py', function (err) {
+  if (err) throw err;
+  console.log('Lights Off!');
+});
+          }
+        }
     }
 })
 
