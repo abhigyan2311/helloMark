@@ -24,10 +24,12 @@ pubnub.addListener({
                        if (err) throw err;
                        console.log('Bedroom lights On!');
                        });
+                       break;
            case false : PythonShell.run('off.py', function (err) {
                          if (err) throw err;
                          console.log('Bedroom lights Off!');
                        });
+                       break;
           }
         }
     }
