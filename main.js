@@ -20,12 +20,12 @@ pubnub.addListener({
         console.log(msg);
         if(msg["device"]=="light" && msg["place"]=="bedroom"){
           switch(msg["state"]){
-           case true : PythonShell.run('on.py', function (err) {
+           case true : PythonShell.run('pi_modules/on.py', function (err) {
                        if (err) throw err;
                        console.log('Bedroom lights On!');
                        });
                        break;
-           case false : PythonShell.run('off.py', function (err) {
+           case false : PythonShell.run('pi_modules/off.py', function (err) {
                          if (err) throw err;
                          console.log('Bedroom lights Off!');
                        });
