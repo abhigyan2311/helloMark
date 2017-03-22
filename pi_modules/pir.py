@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import time
-from captureImg import captureImg
+from picamera import PiCamera
+from Naked.toolshed.shell import execute_js
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
@@ -21,5 +22,12 @@ while True:
              time.sleep(0.1)
        if count==20:
              print "Smile please!"
-             captureImg()
+             camera = PiCamera()
+             camera.resolution = (640, 480)
+             camera.start_preview()
+             sleep(1)
+             camera.capture('../piCam/capturedImg.jpg')
+             camera.stop_preview()
+             camera.close()
              count=0
+             success = execute_js('../imgTransfer.js')

@@ -17,20 +17,17 @@ pubnub.addListener({
         var channelGroup = m.subscription; // The channel group or wildcard sub$
         var pubTT = m.timetoken; // Publish timetoken
         var msg = m.message; // The Payload
-        console.log(msg);
-        if(msg["device"]=="light" && msg["place"]=="bedroom"){
-          switch(msg["state"]){
-           case true : PythonShell.run('pi_modules/on.py', function (err) {
-                       if (err) throw err;
-                       console.log('Bedroom lights On!');
-                       });
-                       break;
-           case false : PythonShell.run('pi_modules/off.py', function (err) {
-                         if (err) throw err;
-                         console.log('Bedroom lights Off!');
-                       });
-                       break;
-          }
+        console.log(channelName);
+
+        switch (channelName) {
+          case 'switch':
+                switchFunc();
+                break;
+          case 'faceCapture':
+                faceRecogFunc();
+                break;
+          default:
+
         }
     }
 })
@@ -40,3 +37,25 @@ pubnub.subscribe({
     channels: ['switch'],
     withPresence: false
 })
+
+
+function switchFunc(){
+  if(msg["device"]=="light" && msg["place"]=="bedroom"){
+    switch(msg["state"]){
+     case true : PythonShell.run('pi_modules/on.py', function (err) {
+                 if (err) throw err;
+                 console.log('Bedroom lights On!');
+                 });
+                 break;
+     case false : PythonShell.run('pi_modules/off.py', function (err) {
+                   if (err) throw err;
+                   console.log('Bedroom lights Off!');
+                 });
+                 break;
+    }
+  }
+}
+
+function faceRecogFunc(){
+  console.log(msg['faceName']);
+}
