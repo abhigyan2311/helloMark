@@ -30,4 +30,5 @@ while True:
              camera.stop_preview()
              camera.close()
              count=0
+             time.sleep(2)
              success = execute_js('../imgTransfer.js')
