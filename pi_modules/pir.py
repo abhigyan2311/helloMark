@@ -36,5 +36,5 @@ while True:
                 if (os.path.isFile('../piCam/capturedImg.jpg')):
                     success = execute_js('../imgTransfer.js')
                     check=1
-                else
+                else:
                     check=0
