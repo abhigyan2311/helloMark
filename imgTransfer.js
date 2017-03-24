@@ -12,12 +12,9 @@ var pubnub = new PubNub({
 
 AWS.config.update({ accessKeyId: 'AKIAIETQQUOICCYPDVZA', secretAccessKey: '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' });
 
-// Read in the file, convert it to base64, store to S3
 fs.readFile('piCam/capturedImg.jpg', function (err, data) {
   if (err) { throw err; }
-
   var base64data = new Buffer(data, 'binary');
-
   var s3 = new AWS.S3();
   s3.putObject({
     Bucket: 'hellomark',
@@ -27,9 +24,7 @@ fs.readFile('piCam/capturedImg.jpg', function (err, data) {
   },function (resp) {
     publishImgMessage();
     console.log('Successfully uploaded package.');
-
   });
-
 });
 
 function publishImgMessage(){
@@ -39,10 +34,9 @@ function publishImgMessage(){
               "img": 1
           },
           channel: 'faceCapture',
-          sendByPost: false, // true to send via post
-          storeInHistory: false, //override default storage options
-          meta: {
-          } // publish extra meta with the request
+          sendByPost: false,
+          storeInHistory: false,
+          meta: {}
       },
       function (status, response) {
           console.log(status);

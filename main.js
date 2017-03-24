@@ -8,7 +8,7 @@ var pubnub = new PubNub({
     ssl: false
 })
 
-console.log("Listening...");
+console.log("Ava Online!");
 
 pubnub.addListener({
     message: function(m) {
@@ -17,14 +17,25 @@ pubnub.addListener({
         var channelGroup = m.subscription; // The channel group or wildcard sub$
         var pubTT = m.timetoken; // Publish timetoken
         var msg = m.message; // The Payload
-        console.log(channelName);
-
-        switch (channelName) {
+        switch (channelName){
           case 'switch':
-                switchFunc();
-                break;
-          case 'faceCapture':
-                faceRecogFunc();
+              if(msg["device"]=="light" && msg["place"]=="bedroom"){
+                  switch(msg["state"]){
+                      case true : PythonShell.run('pi_modules/on.py', function (err) {
+                            if (err) throw err;
+                              console.log('Bedroom lights On!');
+                            });
+                  break;
+                      case false : PythonShell.run('pi_modules/off.py', function (err) {
+                            if (err) throw err;
+                                console.log('Bedroom lights Off!');
+                            });
+                  break;
+                }
+              }
+              break;
+          case 'faceRecog':
+                console.log(msg[0] + ' is on the door.');
                 break;
           default:
 
@@ -34,28 +45,15 @@ pubnub.addListener({
 
 
 pubnub.subscribe({
-    channels: ['switch'],
+    channels: ['switch','faceRecog'],
     withPresence: false
 })
 
 
-function switchFunc(){
-  if(msg["device"]=="light" && msg["place"]=="bedroom"){
-    switch(msg["state"]){
-     case true : PythonShell.run('pi_modules/on.py', function (err) {
-                 if (err) throw err;
-                 console.log('Bedroom lights On!');
-                 });
-                 break;
-     case false : PythonShell.run('pi_modules/off.py', function (err) {
-                   if (err) throw err;
-                   console.log('Bedroom lights Off!');
-                 });
-                 break;
-    }
-  }
+function switchFunc(msg){
+
 }
 
 function faceRecogFunc(){
-  console.log(msg['faceName']);
+  console.log(msg);
 }
