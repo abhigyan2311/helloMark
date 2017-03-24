@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import time
 from picamera import PiCamera
 from Naked.toolshed.shell import execute_js
+import os.path
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
@@ -30,5 +31,7 @@ while True:
              camera.stop_preview()
              camera.close()
              count=0
-             time.sleep(5)
-             success = execute_js('../imgTransfer.js')
+             while False:
+                if (os.path.isFile('../piCam/capturedImg.jpg')):
+                    success = execute_js('../imgTransfer.js')
+                    return True
