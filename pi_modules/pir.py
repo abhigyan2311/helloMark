@@ -23,7 +23,7 @@ while True:
        if count==20:
              print "Smile please!"
              camera = PiCamera()
-             camera.resolution = (640, 480)
+             camera.resolution = (200, 200)
              camera.start_preview()
              time.sleep(1)
              camera.capture('../piCam/capturedImg.jpg')
