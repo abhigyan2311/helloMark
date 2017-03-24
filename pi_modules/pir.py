@@ -2,7 +2,6 @@ import RPi.GPIO as GPIO
 import time
 from picamera import PiCamera
 from Naked.toolshed.shell import execute_js
-import os.path
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
@@ -31,6 +30,3 @@ while True:
              camera.stop_preview()
              camera.close()
              count=0
-
-             while True:
-                 print(os.path.isFile('../piCam/capturedImg.jpg'))
