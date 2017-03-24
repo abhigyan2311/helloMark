@@ -10,7 +10,7 @@ var pubnub = new PubNub({
 })
 
 console.log("Ava Online!");
-var p = spawn("python", ["./pi_modules/pir.py"]);
+//var p = spawn("python", ["./pi_modules/pir.py"]);
 
 pubnub.addListener({
     message: function(m) {

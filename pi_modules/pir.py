@@ -25,7 +25,7 @@ while True:
              camera = PiCamera()
              camera.resolution = (640, 480)
              camera.start_preview()
-             sleep(1)
+             time.sleep(1)
              camera.capture('../piCam/capturedImg.jpg')
              camera.stop_preview()
              camera.close()
