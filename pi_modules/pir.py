@@ -31,7 +31,10 @@ while True:
              camera.stop_preview()
              camera.close()
              count=0
-             while False:
+             check=0
+             while (check!=1):
                 if (os.path.isFile('../piCam/capturedImg.jpg')):
                     success = execute_js('../imgTransfer.js')
-                    return True
+                    check=1
+                else
+                    check=0
