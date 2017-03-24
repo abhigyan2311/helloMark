@@ -1,5 +1,6 @@
 var PubNub = require('pubnub')
 var PythonShell = require('python-shell');
+var spawn = require("child_process").spawn;
 
 var pubnub = new PubNub({
     subscribeKey: "sub-c-383332aa-dcc0-11e6-b6b1-02ee2ddab7fe",
@@ -9,14 +10,14 @@ var pubnub = new PubNub({
 })
 
 console.log("Ava Online!");
+var p = spawn("python", ["./pi_modules/pir.py"]);
 
 pubnub.addListener({
     message: function(m) {
-        // handle message
-        var channelName = m.channel; // The channel for which the message belon$
-        var channelGroup = m.subscription; // The channel group or wildcard sub$
-        var pubTT = m.timetoken; // Publish timetoken
-        var msg = m.message; // The Payload
+        var channelName = m.channel;
+        var channelGroup = m.subscription;
+        var pubTT = m.timetoken;
+        var msg = m.message;
         switch (channelName){
           case 'switch':
               if(msg["device"]=="light" && msg["place"]=="bedroom"){
@@ -43,17 +44,7 @@ pubnub.addListener({
     }
 })
 
-
 pubnub.subscribe({
     channels: ['switch','faceRecog'],
     withPresence: false
 })
-
-
-function switchFunc(msg){
-
-}
-
-function faceRecogFunc(){
-  console.log(msg);
-}
