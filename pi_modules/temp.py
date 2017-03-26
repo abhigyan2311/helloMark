@@ -3,6 +3,7 @@ import sys
 import Adafruit_DHT
 from pubnub.pnconfiguration import PNConfiguration
 from pubnub.pubnub import PubNub
+import json
 
 pnconfig = PNConfiguration()
 pnconfig.subscribe_key = "sub-c-383332aa-dcc0-11e6-b6b1-02ee2ddab7fe"
@@ -30,6 +31,8 @@ while True:
       data = {'Temp': tempMode, 'Hum': humMode}
       a = []
       b = []
+      with open('temperature.txt', 'w') as outfile:
+      json.dump(data, outfile)
       pubnub.publish().channel('Temp').message(data).async(publish_callback)
       
     
