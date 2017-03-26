@@ -12,6 +12,13 @@ var pubnub = new PubNub({
 })
 
 console.log("Ava Online!");
+var speechMsg = "Ava Online"
+var gtts = new gTTS(speechMsg, 'en');
+gtts.save('outputAudio/say.mp3', function(err, result) {
+    if (err) { throw new Error(err) }
+    playAudio();
+});
+
 //var p = spawn("python", ["./pi_modules/pir.py"]);
 
 pubnub.addListener({
