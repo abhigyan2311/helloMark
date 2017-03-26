@@ -18,7 +18,6 @@ i=0
 a = []
 b = []
 while True:
-    
     humidity, temperature = Adafruit_DHT.read_retry(11, 4)
     a.append(temperature)
     b.append(humidity)
