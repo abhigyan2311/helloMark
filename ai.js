@@ -1,4 +1,5 @@
 var apiai = require('apiai');
+var fs = require('fs');
 
 var app = apiai("3e88fac3a4f14428b4ad2eea79eda44e");
 
@@ -7,7 +8,10 @@ var request = app.textRequest('What is the temperature', {
 });
 
 request.on('response', function(response) {
-    console.log(response);
+    if (response['result']['metadata']['intentName'] == 'temperature') {
+        var file = fs.readFileSync('pi_modules/temperature.txt', "utf8");
+        console.log(file);
+    }
 });
 
 request.on('error', function(error) {
