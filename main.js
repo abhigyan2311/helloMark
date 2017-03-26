@@ -2,7 +2,6 @@ var PubNub = require('pubnub')
 var PythonShell = require('python-shell');
 const gTTS = require('gtts');
 var mpg321 = require('mpg321');
-//var spawn = require("child_process").spawn;
 
 var pubnub = new PubNub({
     subscribeKey: "sub-c-383332aa-dcc0-11e6-b6b1-02ee2ddab7fe",
@@ -18,8 +17,6 @@ gtts.save('outputAudio/say.mp3', function(err, result) {
     if (err) { throw new Error(err) }
     playAudio();
 });
-
-//var p = spawn("python", ["./pi_modules/pir.py"]);
 
 pubnub.addListener({
     message: function(m) {
