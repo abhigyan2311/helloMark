@@ -32,7 +32,7 @@ while True:
       a = []
       b = []
       with open('temperature.txt', 'w') as outfile:
-      json.dump(data, outfile)
+        json.dump(data, outfile)
       pubnub.publish().channel('Temp').message(data).async(publish_callback)
       
     
