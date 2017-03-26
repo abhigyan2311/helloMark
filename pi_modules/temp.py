@@ -31,7 +31,7 @@ while True:
       data = {'Temp': tempMode, 'Hum': humMode}
       a = []
       b = []
-      with open('temperature.txt', 'w') as outfile:
+      with open('pi_modules/temperature.txt', 'w') as outfile:
         json.dump(data, outfile)
       pubnub.publish().channel('Temp').message(data).async(publish_callback)
       
