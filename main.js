@@ -56,6 +56,7 @@ pubnub.addListener({
                 break;
             case 'speechRecog':
                 var speechRecogMsg = msg["text"];
+                console.log(msg);
                 var request = app.textRequest(speechRecogMsg, {
                     sessionId: '433c0e9f-bf0a-4fad-8a26-de291a92cc9d'
                 });
@@ -90,7 +91,7 @@ pubnub.addListener({
 })
 
 pubnub.subscribe({
-    channels: ['switch', 'faceRecog'],
+    channels: ['switch', 'faceRecog', 'speechRecog'],
     withPresence: false
 });
 
