@@ -3,6 +3,7 @@ var PythonShell = require('python-shell');
 const gTTS = require('gtts');
 var mpg321 = require('mpg321');
 var apiai = require('apiai');
+var fs = require('fs');
 
 var pubnub = new PubNub({
     subscribeKey: "sub-c-383332aa-dcc0-11e6-b6b1-02ee2ddab7fe",
@@ -113,13 +114,13 @@ pubnub.addListener({
                                                 case 'on':
                                                     PythonShell.run('pi_modules/on.py', function(err) {
                                                         if (err) throw err;
-                                                        console.log('Bedroom lights On!');
+                                                        console.log('Kitchen lights On!');
                                                     });
                                                     break;
                                                 case 'off':
                                                     PythonShell.run('pi_modules/off.py', function(err) {
                                                         if (err) throw err;
-                                                        console.log('Bedroom lights Off!');
+                                                        console.log('Kitchen lights Off!');
                                                     });
                                                     break;
                                                 default:
