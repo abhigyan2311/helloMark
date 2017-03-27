@@ -38,86 +38,6 @@ pubnub.addListener({
                     sessionId: '433c0e9f-bf0a-4fad-8a26-de291a92cc9d'
                 });
                 request.on('response', function(response) {
-                    var speechRespMsg = response['result']['fulfillment']['speech'];
-                    var gtts = new gTTS(speechRespMsg, 'en');
-                    gtts.save('outputAudio/say.mp3', function(err, result) {
-                        if (err) { throw new Error(err) }
-                        playAudio();
-                    });
-                    if (response['result']['metadata']['intentName'] == 'switch') {
-                        if (response['result']['parameters']['device'][0] != null && response['result']['parameters']['room'][0] != null && response['result']['parameters']['state'][0] != null) {
-                            switch (response['result']['parameters']['room'][0]) {
-                                case 'bedroom':
-                                    switch (response['result']['parameters']['device'][0]) {
-                                        case 'light':
-                                            switch (response['result']['parameters']['state'][0]) {
-                                                case 'on':
-                                                    PythonShell.run('pi_modules/on.py', function(err) {
-                                                        if (err) throw err;
-                                                        console.log('Bedroom lights On!');
-                                                    });
-                                                    break;
-                                                case 'off':
-                                                    PythonShell.run('pi_modules/off.py', function(err) {
-                                                        if (err) throw err;
-                                                        console.log('Bedroom lights Off!');
-                                                    });
-                                                    break;
-                                                default:
-                                                    console.log("WOW");
-                                            }
-                                            break;
-                                        case 'fan':
-                                            switch (response['result']['parameters']['state'][0]) {
-                                                case 'on':
-                                                    PythonShell.run('pi_modules/fanOn.py', function(err) {
-                                                        if (err) throw err;
-                                                        console.log('Bedroom fan On!');
-                                                    });
-                                                    break;
-                                                case 'off':
-                                                    PythonShell.run('pi_modules/fanOff.py', function(err) {
-                                                        if (err) throw err;
-                                                        console.log('Bedroom fan Off!');
-                                                    });
-                                                    break;
-                                                default:
-                                                    console.log("WOW");
-                                            }
-                                            break;
-                                        default:
-                                            console.log("OMG2");
-                                    }
-                                    break;
-                                case 'kitchen':
-                                    switch (response['result']['parameters']['device'][0]) {
-                                        case 'light':
-                                            switch (response['result']['parameters']['state'][0]) {
-                                                case 'on':
-                                                    PythonShell.run('pi_modules/on.py', function(err) {
-                                                        if (err) throw err;
-                                                        console.log('Kitchen lights On!');
-                                                    });
-                                                    break;
-                                                case 'off':
-                                                    PythonShell.run('pi_modules/off.py', function(err) {
-                                                        if (err) throw err;
-                                                        console.log('Kitchen lights Off!');
-                                                    });
-                                                    break;
-                                                default:
-                                                    console.log("Wow");
-                                            }
-                                            break;
-                                        default:
-                                            console.log("OMG2");
-                                    }
-                                    break;
-                                default:
-                                    console.log("OMG");
-                            }
-                        }
-                    }
                     if (response['result']['metadata']['intentName'] == 'temperature') {
                         var temperature = fs.readFileSync('pi_modules/temperature.txt', "utf8");
                         var tempJson = JSON.parse(temperature);
@@ -127,6 +47,87 @@ pubnub.addListener({
                             if (err) { throw new Error(err) }
                             playAudio();
                         });
+                    } else {
+                        if (response['result']['metadata']['intentName'] == 'switch') {
+                            var speechRespMsg = response['result']['fulfillment']['speech'];
+                            var gtts = new gTTS(speechRespMsg, 'en');
+                            gtts.save('outputAudio/say.mp3', function(err, result) {
+                                if (err) { throw new Error(err) }
+                                playAudio();
+                            });
+                            if (response['result']['parameters']['device'][0] != null && response['result']['parameters']['room'][0] != null && response['result']['parameters']['state'][0] != null) {
+                                switch (response['result']['parameters']['room'][0]) {
+                                    case 'bedroom':
+                                        switch (response['result']['parameters']['device'][0]) {
+                                            case 'light':
+                                                switch (response['result']['parameters']['state'][0]) {
+                                                    case 'on':
+                                                        PythonShell.run('pi_modules/on.py', function(err) {
+                                                            if (err) throw err;
+                                                            console.log('Bedroom lights On!');
+                                                        });
+                                                        break;
+                                                    case 'off':
+                                                        PythonShell.run('pi_modules/off.py', function(err) {
+                                                            if (err) throw err;
+                                                            console.log('Bedroom lights Off!');
+                                                        });
+                                                        break;
+                                                    default:
+                                                        console.log("WOW");
+                                                }
+                                                break;
+                                            case 'fan':
+                                                switch (response['result']['parameters']['state'][0]) {
+                                                    case 'on':
+                                                        PythonShell.run('pi_modules/fanOn.py', function(err) {
+                                                            if (err) throw err;
+                                                            console.log('Bedroom fan On!');
+                                                        });
+                                                        break;
+                                                    case 'off':
+                                                        PythonShell.run('pi_modules/fanOff.py', function(err) {
+                                                            if (err) throw err;
+                                                            console.log('Bedroom fan Off!');
+                                                        });
+                                                        break;
+                                                    default:
+                                                        console.log("WOW");
+                                                }
+                                                break;
+                                            default:
+                                                console.log("OMG2");
+                                        }
+                                        break;
+                                    case 'kitchen':
+                                        switch (response['result']['parameters']['device'][0]) {
+                                            case 'light':
+                                                switch (response['result']['parameters']['state'][0]) {
+                                                    case 'on':
+                                                        PythonShell.run('pi_modules/on.py', function(err) {
+                                                            if (err) throw err;
+                                                            console.log('Kitchen lights On!');
+                                                        });
+                                                        break;
+                                                    case 'off':
+                                                        PythonShell.run('pi_modules/off.py', function(err) {
+                                                            if (err) throw err;
+                                                            console.log('Kitchen lights Off!');
+                                                        });
+                                                        break;
+                                                    default:
+                                                        console.log("Wow");
+                                                }
+                                                break;
+                                            default:
+                                                console.log("OMG2");
+                                        }
+                                        break;
+                                    default:
+                                        console.log("OMG");
+                                }
+                            }
+                        }
                     }
                 });
                 request.on('error', function(error) {
