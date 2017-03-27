@@ -11,7 +11,7 @@ var pubnub = new PubNub({
 function publishImgMessage() {
     pubnub.publish({
             message: {
-                "text": "bedroom"
+                "text": "led"
             },
             channel: 'speechRecog',
             sendByPost: false, // true to send via post
