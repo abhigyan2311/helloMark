@@ -5,7 +5,9 @@ var mpg321 = require('mpg321');
 
 var app = apiai("3e88fac3a4f14428b4ad2eea79eda44e");
 
-var request = app.textRequest('What is the temperature', {
+var speechToTextVal = "How hot it is ?";
+
+var request = app.textRequest(speechToTextVal, {
     sessionId: '433c0e9f-bf0a-4fad-8a26-de291a92cc9d'
 });
 
@@ -20,7 +22,6 @@ request.on('response', function(response) {
     if (response['result']['metadata']['intentName'] == 'temperature') {
         var temperature = fs.readFileSync('pi_modules/temperature.txt', "utf8");
         var tempJson = JSON.parse(temperature);
-        console.log(tempJson['Temp']);
         var speechMsg = "Temperature is " + tempJson['Temp'] + " degree celsius and Humidity is " + tempJson['Hum'] + " percent";
         var gtts = new gTTS(speechMsg, 'en');
         gtts.save('outputAudio/say.mp3', function(err, result) {
