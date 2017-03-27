@@ -56,11 +56,12 @@ pubnub.addListener({
                 break;
             case 'speechRecog':
                 var speechRecogMsg = msg["text"];
-                console.log(msg);
+                console.log(speechRecogMsg);
                 var request = app.textRequest(speechRecogMsg, {
                     sessionId: '433c0e9f-bf0a-4fad-8a26-de291a92cc9d'
                 });
                 request.on('response', function(response) {
+                    console.log(response);
                     if (response['result']['metadata']['intentName'] == 'switch') {
                         var speechRespMsg = response['result']['fulfillment']['speech'];
                         var gtts = new gTTS(speechRespMsg, 'en');
@@ -83,6 +84,10 @@ pubnub.addListener({
                         });
                     }
                 });
+                request.on('error', function(error) {
+                    console.log(error);
+                });
+                request.end();
                 break;
             default:
 
