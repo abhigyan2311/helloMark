@@ -23,24 +23,6 @@ pubnub.addListener({
         var pubTT = m.timetoken;
         var msg = m.message;
         switch (channelName) {
-            case 'switch':
-                if (msg["device"] == "light" && msg["place"] == "bedroom") {
-                    switch (msg["state"]) {
-                        case true:
-                            PythonShell.run('pi_modules/on.py', function(err) {
-                                if (err) throw err;
-                                console.log('Bedroom lights On!');
-                            });
-                            break;
-                        case false:
-                            PythonShell.run('pi_modules/off.py', function(err) {
-                                if (err) throw err;
-                                console.log('Bedroom lights Off!');
-                            });
-                            break;
-                    }
-                }
-                break;
             case 'faceRecog':
                 var speechMsg = msg[0] + ' is on the door.';
                 var gtts = new gTTS(speechMsg, 'en');
