@@ -8,22 +8,20 @@ var pubnub = new PubNub({
     ssl: false
 })
 
-function publishImgMessage(){
-  pubnub.publish(
-      {
-          message: {
-              "img": 1
-          },
-          channel: 'faceCapture',
-          sendByPost: false, // true to send via post
-          storeInHistory: false, //override default storage options
-          meta: {
-          } // publish extra meta with the request
-      },
-      function (status, response) {
-          console.log(status);
-      }
-  );
+function publishImgMessage() {
+    pubnub.publish({
+            message: {
+                "text": "bedroom"
+            },
+            channel: 'speechRecog',
+            sendByPost: false, // true to send via post
+            storeInHistory: false, //override default storage options
+            meta: {} // publish extra meta with the request
+        },
+        function(status, response) {
+            console.log(status);
+        }
+    );
 }
 
 publishImgMessage();

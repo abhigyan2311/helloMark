@@ -61,7 +61,6 @@ pubnub.addListener({
                     sessionId: '433c0e9f-bf0a-4fad-8a26-de291a92cc9d'
                 });
                 request.on('response', function(response) {
-                    console.log(response);
                     if (response['result']['metadata']['intentName'] == 'switch') {
                         var speechRespMsg = response['result']['fulfillment']['speech'];
                         var gtts = new gTTS(speechRespMsg, 'en');
@@ -69,7 +68,7 @@ pubnub.addListener({
                             if (err) { throw new Error(err) }
                             playAudio();
                         });
-                        if (response['result']['parameters']['device'][0] != "" && response['result']['parameters']['room'][0] != "" && response['result']['parameters']['state'][0] != "") {
+                        if (response['result']['parameters']['device'][0] != null && response['result']['parameters']['room'][0] != null && response['result']['parameters']['state'][0] != null) {
                             console.log(response['result']['parameters']['device'][0]);
                         }
                     }
