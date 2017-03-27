@@ -38,13 +38,13 @@ pubnub.addListener({
                     sessionId: '433c0e9f-bf0a-4fad-8a26-de291a92cc9d'
                 });
                 request.on('response', function(response) {
+                    var speechRespMsg = response['result']['fulfillment']['speech'];
+                    var gtts = new gTTS(speechRespMsg, 'en');
+                    gtts.save('outputAudio/say.mp3', function(err, result) {
+                        if (err) { throw new Error(err) }
+                        playAudio();
+                    });
                     if (response['result']['metadata']['intentName'] == 'switch') {
-                        var speechRespMsg = response['result']['fulfillment']['speech'];
-                        var gtts = new gTTS(speechRespMsg, 'en');
-                        gtts.save('outputAudio/say.mp3', function(err, result) {
-                            if (err) { throw new Error(err) }
-                            playAudio();
-                        });
                         if (response['result']['parameters']['device'][0] != null && response['result']['parameters']['room'][0] != null && response['result']['parameters']['state'][0] != null) {
                             switch (response['result']['parameters']['room'][0]) {
                                 case 'bedroom':
