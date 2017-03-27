@@ -82,7 +82,6 @@ pubnub.addListener({
                                                     break;
                                                 default:
                                                     console.log("WOW");
-                                                    break;
                                             }
                                             break;
                                         case 'fan':
@@ -101,12 +100,10 @@ pubnub.addListener({
                                                     break;
                                                 default:
                                                     console.log("WOW");
-                                                    break;
                                             }
                                             break;
                                         default:
                                             console.log("OMG2");
-                                            break;
                                     }
                                     break;
                                 case 'kitchen':
@@ -125,8 +122,12 @@ pubnub.addListener({
                                                         console.log('Bedroom lights Off!');
                                                     });
                                                     break;
+                                                default:
+                                                    console.log("Wow");
                                             }
                                             break;
+                                        default:
+                                            console.log("OMG2");
                                     }
                                     break;
                                 default:
