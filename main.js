@@ -23,6 +23,24 @@ pubnub.addListener({
         var pubTT = m.timetoken;
         var msg = m.message;
         switch (channelName) {
+            case 'switch':
+                if (msg["device"] == "light" && msg["place"] == "bedroom") {
+                    switch (msg["state"]) {
+                        case true:
+                            PythonShell.run('pi_modules/on.py', function(err) {
+                                if (err) throw err;
+                                console.log('Bedroom lights On!');
+                            });
+                            break;
+                        case false:
+                            PythonShell.run('pi_modules/off.py', function(err) {
+                                if (err) throw err;
+                                console.log('Bedroom lights Off!');
+                            });
+                            break;
+                    }
+                }
+                break;
             case 'faceRecog':
                 var speechMsg = msg[0] + ' is on the door.';
                 var gtts = new gTTS(speechMsg, 'en');
@@ -70,13 +88,13 @@ pubnub.addListener({
                                                 case 'light':
                                                     switch (response['result']['parameters']['state'][0]) {
                                                         case 'on':
-                                                            PythonShell.run('pi_modules/on.py', function(err) {
+                                                            PythonShell.run('pi_modules/bedroomLightsOn.py', function(err) {
                                                                 if (err) throw err;
                                                                 console.log('Bedroom lights On!');
                                                             });
                                                             break;
                                                         case 'off':
-                                                            PythonShell.run('pi_modules/off.py', function(err) {
+                                                            PythonShell.run('pi_modules/bedroomLightsOff.py', function(err) {
                                                                 if (err) throw err;
                                                                 console.log('Bedroom lights Off!');
                                                             });
@@ -88,13 +106,13 @@ pubnub.addListener({
                                                 case 'fan':
                                                     switch (response['result']['parameters']['state'][0]) {
                                                         case 'on':
-                                                            PythonShell.run('pi_modules/fanOn.py', function(err) {
+                                                            PythonShell.run('pi_modules/bedroomFanOn.py', function(err) {
                                                                 if (err) throw err;
                                                                 console.log('Bedroom fan On!');
                                                             });
                                                             break;
                                                         case 'off':
-                                                            PythonShell.run('pi_modules/fanOff.py', function(err) {
+                                                            PythonShell.run('pi_modules/bedroomFanOff.py', function(err) {
                                                                 if (err) throw err;
                                                                 console.log('Bedroom fan Off!');
                                                             });
@@ -112,13 +130,13 @@ pubnub.addListener({
                                                 case 'light':
                                                     switch (response['result']['parameters']['state'][0]) {
                                                         case 'on':
-                                                            PythonShell.run('pi_modules/on.py', function(err) {
+                                                            PythonShell.run('pi_modules/kitchenLightsOn.py', function(err) {
                                                                 if (err) throw err;
                                                                 console.log('Kitchen lights On!');
                                                             });
                                                             break;
                                                         case 'off':
-                                                            PythonShell.run('pi_modules/off.py', function(err) {
+                                                            PythonShell.run('pi_modules/kitchenLightsOff.py', function(err) {
                                                                 if (err) throw err;
                                                                 console.log('Kitchen lights Off!');
                                                             });
