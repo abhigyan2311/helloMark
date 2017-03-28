@@ -6,14 +6,15 @@ var pubnub = new PubNub({
     publishKey: "pub-c-73cca4b9-e219-4f94-90fc-02dd8f018045",
     secretKey: "sec-c-YzcyZjI4NzEtNmUxMi00ZDc0LWI4ZGMtNGUyYmFlZmI1OTQ3",
     ssl: false
-})
+});
 
 function publishImgMessage() {
     pubnub.publish({
             message: {
-                "text": "Turn on bedroom fan"
+                'Temp': '29',
+                'Hum': '56'
             },
-            channel: 'speechRecog',
+            channel: 'Temp',
             sendByPost: false, // true to send via post
             storeInHistory: false, //override default storage options
             meta: {} // publish extra meta with the request
