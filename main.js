@@ -24,22 +24,7 @@ pubnub.addListener({
         var msg = m.message;
         switch (channelName) {
             case 'switch':
-                if (msg["device"] == "light" && msg["place"] == "bedroom") {
-                    switch (msg["state"]) {
-                        case true:
-                            PythonShell.run('pi_modules/bedroomLightsOn.py', function(err) {
-                                if (err) throw err;
-                                console.log('Bedroom lights On!');
-                            });
-                            break;
-                        case false:
-                            PythonShell.run('pi_modules/bedroomLightsOff.py', function(err) {
-                                if (err) throw err;
-                                console.log('Bedroom lights Off!');
-                            });
-                            break;
-                    }
-                }
+                check(msg["place"], msg["device"], msg["state"]);
                 break;
             case 'faceRecog':
                 var speechMsg = msg[0] + ' is on the door.';
@@ -82,80 +67,12 @@ pubnub.addListener({
                             });
                             if (response['result']['metadata']['intentName'] == 'switch') {
                                 if (response['result']['parameters']['device'][0] != null && response['result']['parameters']['room'][0] != null && response['result']['parameters']['state'][0] != null) {
-                                    switch (response['result']['parameters']['room'][0]) {
-                                        case 'bedroom':
-                                            switch (response['result']['parameters']['device'][0]) {
-                                                case 'light':
-                                                    switch (response['result']['parameters']['state'][0]) {
-                                                        case 'on':
-                                                            PythonShell.run('pi_modules/bedroomLightsOn.py', function(err) {
-                                                                if (err) throw err;
-                                                                console.log('Bedroom lights On!');
-                                                            });
-                                                            break;
-                                                        case 'off':
-                                                            PythonShell.run('pi_modules/bedroomLightsOff.py', function(err) {
-                                                                if (err) throw err;
-                                                                console.log('Bedroom lights Off!');
-                                                            });
-                                                            break;
-                                                        default:
-                                                            console.log("WOW");
-                                                    }
-                                                    break;
-                                                case 'fan':
-                                                    switch (response['result']['parameters']['state'][0]) {
-                                                        case 'on':
-                                                            PythonShell.run('pi_modules/bedroomFanOn.py', function(err) {
-                                                                if (err) throw err;
-                                                                console.log('Bedroom fan On!');
-                                                            });
-                                                            break;
-                                                        case 'off':
-                                                            PythonShell.run('pi_modules/bedroomFanOff.py', function(err) {
-                                                                if (err) throw err;
-                                                                console.log('Bedroom fan Off!');
-                                                            });
-                                                            break;
-                                                        default:
-                                                            console.log("WOW");
-                                                    }
-                                                    break;
-                                                default:
-                                                    console.log("OMG2");
-                                            }
-                                            break;
-                                        case 'kitchen':
-                                            switch (response['result']['parameters']['device'][0]) {
-                                                case 'light':
-                                                    switch (response['result']['parameters']['state'][0]) {
-                                                        case 'on':
-                                                            PythonShell.run('pi_modules/kitchenLightsOn.py', function(err) {
-                                                                if (err) throw err;
-                                                                console.log('Kitchen lights On!');
-                                                            });
-                                                            break;
-                                                        case 'off':
-                                                            PythonShell.run('pi_modules/kitchenLightsOff.py', function(err) {
-                                                                if (err) throw err;
-                                                                console.log('Kitchen lights Off!');
-                                                            });
-                                                            break;
-                                                        default:
-                                                            console.log("Wow");
-                                                    }
-                                                    break;
-                                                default:
-                                                    console.log("OMG2");
-                                            }
-                                            break;
-                                        default:
-                                            console.log("OMG");
-                                    }
-                                }
+                                    check(response['result']['parameters']['room'][0], response['result']['parameters']['device'][0], response['result']['parameters']['state'][0]);
+    
                             }
                         }
                     }
+                }
                 });
                 request.on('error', function(error) {
                     console.log(error);
@@ -167,6 +84,92 @@ pubnub.addListener({
         }
     }
 })
+
+function check(roomName, deviceName, stateName){
+    switch (roomName) {
+        case 'bedroom':
+            switch (deviceName) {
+                case 'light':
+                    switch (stateName) {
+                        case 'on':
+                            switchOn(35);
+                            break;
+                        case 'off':
+                            switchOff(35);
+                            break;
+                        default:
+                            console.log("WOW");
+                    }
+                    break;
+                case 'fan':
+                    switch (stateName) {
+                        case 'on':
+                            switchOn(37);
+                            break;
+                        case 'off':
+                            switchOff(37);
+                            break;
+                        default:
+                            console.log("WOW");
+                    }
+                    break;
+                default:
+                    console.log("OMG2");
+            }
+            break;
+        case 'kitchen':
+            switch (deviceName) {
+                case 'light':
+                    switch (stateName) {
+                        case 'on':
+                            switchOn(40);
+                            break;
+                        case 'off':
+                            switchOff(40);
+                            break;
+                        default:
+                            console.log("Wow");
+                    }
+                    break;
+                default:
+                    console.log("OMG2");
+            }
+            break;
+        default:
+            console.log("OMG");
+    }
+}
+
+function switchOn(pin){
+    var fs = require('fs');
+    fs.writeFile("pi_modules/pinNumber.txt", pin, function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log("The file was saved!");
+    });
+
+    PythonShell.run('pi_modules/switchOn.py', function(err) {
+        if (err) throw err;
+             console.log('On!');
+        });
+}
+
+
+function switchOff(pin){
+    var fs = require('fs');
+    fs.writeFile("pi_modules/pinNumber.txt", pin, function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log("The file was saved!");
+    });
+
+    PythonShell.run('pi_modules/switchOff.py', function(err) {
+        if (err) throw err;
+             console.log('Off!');
+        });
+}
 
 pubnub.subscribe({
     channels: ['switch', 'faceRecog', 'speechRecog'],
