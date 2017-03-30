@@ -120,7 +120,6 @@ function check(roomName, deviceName, stateName){
         case 'kitchen':
             switch (deviceName) {
                 case 'light':
-                    console.log(stateName);
                     switch (stateName) {
                         case 'on':
                             switchOn(40);
@@ -148,14 +147,14 @@ function switchOn(pin){
             return console.log(err);
         }
         console.log("The file was saved!");
-    });
-
-    PythonShell.run('pi_modules/switchOn.py', function(err) {
+        PythonShell.run('pi_modules/switchOn.py', function(err) {
         if (err) throw err;
              console.log('On!');
         });
-}
+    });
 
+    
+}
 
 function switchOff(pin){
     var fs = require('fs');
@@ -164,12 +163,11 @@ function switchOff(pin){
             return console.log(err);
         }
         console.log("The file was saved!");
-    });
-
-    PythonShell.run('pi_modules/switchOff.py', function(err) {
+        PythonShell.run('pi_modules/switchOff.py', function(err) {
         if (err) throw err;
              console.log('Off!');
         });
+    });
 }
 
 pubnub.subscribe({
