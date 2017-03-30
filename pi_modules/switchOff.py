@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 
 
-with open('pinNumber.txt') as f:
+with open('pi_modules/pinNumber.txt') as f:
        a =  int(f.read())
 
 GPIO.setmode(GPIO.BOARD)
