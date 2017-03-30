@@ -120,6 +120,7 @@ function check(roomName, deviceName, stateName){
         case 'kitchen':
             switch (deviceName) {
                 case 'light':
+                    console.log(stateName);
                     switch (stateName) {
                         case 'on':
                             switchOn(40);
