@@ -27,5 +27,7 @@ while a==1:
                  print "Intruder Alarm!"
                  count=0
                  success = execute_js('sendNotif.js')
+                 with open('pi_modules/locked.txt', 'w') as outfile:
+                     json.dump(0, outfile)
                  a=0
                          
