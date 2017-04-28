@@ -8,8 +8,7 @@ var pubnub = new PubNub({
     ssl: false
 })
 
-function publishImgMessage(){
-  pubnub.publish(
+pubnub.publish(
       {
           message: {
               "intruderDetected": 1
@@ -23,4 +22,3 @@ function publishImgMessage(){
           console.log(status);
       }
   );
-}
