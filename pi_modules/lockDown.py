@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 from Naked.toolshed.shell import execute_js
+import json
 
 
 with open('pi_modules/locked.txt') as f:
