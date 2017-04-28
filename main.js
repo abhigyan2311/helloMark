@@ -30,6 +30,7 @@ pubnub.addListener({
                         process.exit();
                     });
                 }
+                console.log(msg);
                 if(msg["isLockDownEnabled"] == 1){
                   fs.writeFile("pi_modules/locked.txt", 1, function(err) {
                     if(err) {
