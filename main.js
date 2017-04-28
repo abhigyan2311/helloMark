@@ -37,7 +37,6 @@ pubnub.addListener({
                  });
                 }
                 else{
-                    var fs = require('fs');
                     fs.writeFile("pi_modules/locked.txt", 0, function(err) {
                        if(err) {
                          return console.log(err);
@@ -163,7 +162,6 @@ function check(roomName, deviceName, stateName){
 }
 
 function switchOn(pin){
-    var fs = require('fs');
     fs.writeFile("pi_modules/pinNumber.txt", pin, function(err) {
         if(err) {
             return console.log(err);
@@ -179,7 +177,6 @@ function switchOn(pin){
 }
 
 function switchOff(pin){
-    var fs = require('fs');
     fs.writeFile("pi_modules/pinNumber.txt", pin, function(err) {
         if(err) {
             return console.log(err);
