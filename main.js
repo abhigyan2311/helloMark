@@ -193,7 +193,7 @@ function switchOff(pin){
 }
 
 pubnub.subscribe({
-    channels: ['switch', 'faceRecog', 'speechRecog'],
+    channels: ['switch', 'faceRecog', 'speechRecog', 'lockDown'],
     withPresence: false
 });
 
