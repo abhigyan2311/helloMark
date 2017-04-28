@@ -44,6 +44,7 @@ pubnub.addListener({
                     console.log("The file was saved!");
                     });
                 }
+                break;
             case 'switch':
                 check(msg["place"], msg["device"], msg["state"]);
                 break;
