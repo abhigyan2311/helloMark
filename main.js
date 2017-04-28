@@ -24,12 +24,18 @@ pubnub.addListener({
         var msg = m.message;
         switch (channelName) {
             case 'lockDown':
+                if(msg["intruderDetected"] == 1){
+                    var proc = mpg321().file('outputAudio/alarm.mp3').exec();
+                    process.on('SIGINT', function(data) {
+                        process.exit();
+                    });
+                }
                 if(msg["isLockDownEnabled"] == 1){
                   fs.writeFile("pi_modules/locked.txt", 1, function(err) {
                     if(err) {
                            return console.log(err);
                     }
-                    console.log("The file was saved!");
+                    console.log("Lockdown ON file was saved!");
                     PythonShell.run('pi_modules/lockDown.py', function(err) {
                     if (err) throw err;
                         console.log('Lock Down Mode!');
@@ -41,7 +47,7 @@ pubnub.addListener({
                        if(err) {
                          return console.log(err);
                        }
-                    console.log("The file was saved!");
+                    console.log("Lockdown OFF was saved!");
                     });
                 }
                 break;
@@ -167,14 +173,12 @@ function switchOn(pin){
         if(err) {
             return console.log(err);
         }
-        console.log("The file was saved!");
+        console.log("Switch ON was saved!");
         PythonShell.run('pi_modules/switchOn.py', function(err) {
         if (err) throw err;
              console.log('On!');
         });
-    });
-
-    
+    });   
 }
 
 function switchOff(pin){
@@ -182,7 +186,7 @@ function switchOff(pin){
         if(err) {
             return console.log(err);
         }
-        console.log("The file was saved!");
+        console.log("Switch OFF was saved!");
         PythonShell.run('pi_modules/switchOff.py', function(err) {
         if (err) throw err;
              console.log('Off!');
