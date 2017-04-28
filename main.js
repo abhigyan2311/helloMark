@@ -23,6 +23,28 @@ pubnub.addListener({
         var pubTT = m.timetoken;
         var msg = m.message;
         switch (channelName) {
+            case 'lockDown':
+                if(msg["isLockDownEnabled"] == 1){
+                  fs.writeFile("pi_modules/locked.txt", 1, function(err) {
+                    if(err) {
+                           return console.log(err);
+                    }
+                    console.log("The file was saved!");
+                    PythonShell.run('pi_modules/lockDown.py', function(err) {
+                    if (err) throw err;
+                        console.log('Lock Down Mode!');
+                    });
+                 });
+                }
+                else{
+                    var fs = require('fs');
+                    fs.writeFile("pi_modules/locked.txt", 0, function(err) {
+                       if(err) {
+                         return console.log(err);
+                       }
+                    console.log("The file was saved!");
+                    });
+                }
             case 'switch':
                 check(msg["place"], msg["device"], msg["state"]);
                 break;

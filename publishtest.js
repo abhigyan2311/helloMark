@@ -11,10 +11,9 @@ var pubnub = new PubNub({
 function publishImgMessage() {
     pubnub.publish({
             message: {
-                'Temp': '29',
-                'Hum': '56'
+                'isLockDownEnabled' : 1
             },
-            channel: 'Temp',
+            channel: 'lockDown',
             sendByPost: false, // true to send via post
             storeInHistory: false, //override default storage options
             meta: {} // publish extra meta with the request
