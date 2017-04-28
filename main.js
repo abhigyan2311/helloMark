@@ -43,7 +43,7 @@ pubnub.addListener({
                     });
                  });
                 }
-                else{
+                else if(msg["isLockDownEnabled"] == 0){
                     fs.writeFile("pi_modules/locked.txt", 0, function(err) {
                        if(err) {
                          return console.log(err);

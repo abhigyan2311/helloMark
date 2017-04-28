@@ -27,4 +27,5 @@ while a==1:
                  print "Intruder Alarm!"
                  count=0
                  success = execute_js('sendNotif.js')
+                 a=0
                          
