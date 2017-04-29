@@ -24,7 +24,6 @@ while True:
     b.append(humidity)
     #print 'Temp: {0:0.1f} C  Humidity: {1:0.1f} %'.format(temperature, humidity)
     print(temperature)
-    print(humidity)
     i+=1
     if (i>9):
       i=0
@@ -33,7 +32,7 @@ while True:
       data = {'Temp': tempMode, 'Hum': humMode}
       a = []
       b = []
-      with open('pi_modules/temperature.txt', 'w') as outfile:
+      with open('/home/pi/Work/helloMark/pi_modules/temperature.txt', 'w') as outfile:
         json.dump(data, outfile)
       pubnub.publish().channel('Temp').message(data).async(publish_callback)
       
