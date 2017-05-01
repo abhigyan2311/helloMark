@@ -133,10 +133,10 @@ function check(roomName, deviceName, stateName){
                 case 'fan':
                     switch (stateName) {
                         case 'on':
-                            switchOn(37);
+                            switchOff(37); //Relay is reversed
                             break;
                         case 'off':
-                            switchOff(37);
+                            switchOn(37);
                             break;
                         default:
                             console.log("WOW");
